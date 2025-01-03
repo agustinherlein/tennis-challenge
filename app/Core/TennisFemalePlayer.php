@@ -12,6 +12,14 @@ class TennisFemalePlayer extends TennisPlayer
         $this->reaction = $reaction;
     }
 
+    public function getStats()
+    {
+        return [
+            "skill" => $this->skill,
+            "reaction" => $this->reaction,
+        ];
+    }
+
     public function perform($luck_factor = 0.5): int
     {
         $stats = ($this->skill + $this->reaction) / 2;

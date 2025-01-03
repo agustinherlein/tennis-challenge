@@ -6,6 +6,7 @@ use App\Core\TennisPlayer;
 use App\Core\TennisPlayerFactory;
 use App\Core\TennisTournament;
 use App\Models\Gender;
+use App\Models\Player;
 use App\Services\TennisService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -33,10 +34,11 @@ class TennisController extends BaseApiController
             $winner = $this->tennis_service->simulateTournament($validated['players'], $validated['gender']);
             $data = [
                 "date" => date("Y-m-d"),
-                "winner" => $winner->getName()
+                "winner" => [
+                    "name" => $winner->getName(),
+                    "stats" => $winner->getStats()
+                ]
             ];
-
-            // $data = ["pongo" => "pingo"];
 
             return $this->sendResponse($data, "The tournament was simulated successfully");
         } catch (\Throwable $th) {

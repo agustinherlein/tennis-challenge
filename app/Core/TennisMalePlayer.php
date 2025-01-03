@@ -14,6 +14,15 @@ class TennisMalePlayer extends TennisPlayer
         $this->strength = $strength;
     }
 
+    public function getStats()
+    {
+        return [
+            "skill" => $this->skill,
+            "speed" => $this->speed,
+            "strength" => $this->strength,
+        ];
+    }
+
     public function perform($luck_factor = 0.5): int
     {
         $stats = ($this->skill + $this->strength + $this->speed) / 3;

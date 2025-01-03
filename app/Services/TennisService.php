@@ -8,7 +8,6 @@ use App\Models\Tournament;
 
 class TennisService
 {
-
     public function simulateTournament($players, $gender)
     {
         $tournament = new TennisTournament(count($players), $gender);

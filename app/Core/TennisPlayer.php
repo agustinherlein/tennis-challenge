@@ -35,6 +35,13 @@ class TennisPlayer
         return $this->skill;
     }
 
+    public function getStats()
+    {
+        return [
+            "skill" => $this->getSkill()
+        ];
+    }
+
     // Generate a number to represent the performance of the player on a given match
     public function perform()
     {
