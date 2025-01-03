@@ -6,10 +6,15 @@ class TennisFemalePlayer extends TennisPlayer
 {
     protected int $reaction;
 
-    public function __construct($skill, $reaction)
+    public function __construct($name, $skill, $reaction)
     {
-        parent::__construct('f', $skill);
+        parent::__construct($name, 'f', $skill);
         $this->reaction = $reaction;
     }
 
+    public function perform($luck_factor = 0.5): int
+    {
+        $stats = ($this->skill + $this->reaction) / 2;
+        return (int)round(($luck_factor * rand(0, 100) + (1 - $luck_factor) * $stats) / 2);
+    }
 }

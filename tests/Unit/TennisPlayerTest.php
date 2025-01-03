@@ -16,7 +16,7 @@ class TennisPlayerTest extends TestCase
 {
     public function test_male_player_perform_method_returns_an_integer(): void
     {
-        $player = new TennisMalePlayer(75, 60, 85);
+        $player = new TennisMalePlayer('Juan', 75, 60, 85);
         assertIsObject($player);
         assertEquals($player->getGender(), 'm');
         assertIsInt($player->perform());
@@ -24,7 +24,7 @@ class TennisPlayerTest extends TestCase
 
     public function test_female_player_perform_method_returns_an_integer(): void
     {
-        $player = new TennisFemalePlayer(75, 80);
+        $player = new TennisFemalePlayer('María', 75, 80);
         assertIsObject($player);
         assertEquals($player->getGender(), 'f');
         assertIsInt($player->perform());

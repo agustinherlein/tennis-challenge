@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tournament;
+use App\Services\DatabaseTournamentService;
 use Illuminate\Http\Request;
 
-class TournamentController extends Controller
+class TournamentController extends BaseApiController
 {
+    protected DatabaseTournamentService $db_tournament_service;
+
+    public function __construct(DatabaseTournamentService $db_tournament_service)
+    {
+        $this->db_tournament_service = $db_tournament_service;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $data = Tournament::all();
+        $this->sendResponse($data);
     }
 
     /**
@@ -27,7 +29,14 @@ class TournamentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        try {
+            $this->db_tournament_service->createTournament($data);
+            $this->sendResponse([], 'Tournament saved successfully');
+        } catch (\Throwable $th) {
+            $this->sendError($th->getMessage(), 500);
+        }
+        
     }
 
     /**
@@ -35,15 +44,8 @@ class TournamentController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $data = Tournament::findOrFail($id);
+        $this->sendResponse($data);
     }
 
     /**

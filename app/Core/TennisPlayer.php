@@ -6,16 +6,23 @@ use Exception;
 
 class TennisPlayer
 {
+    protected string $name;
     protected int $skill;
     protected string $gender;
 
-    public function __construct($gender, $skill)
+    public function __construct($name, $gender, $skill)
     {
         if (!is_int($skill) || $skill > 100 || $skill < 0) {
             throw new Exception($skill . "is an invalid skill value. Must be an integer between 0 and 100");
         }
+        $this->name = $name;
         $this->gender = $gender;
         $this->skill = $skill;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 
     public function getGender()

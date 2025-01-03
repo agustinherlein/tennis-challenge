@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Core\TennisFemalePlayer;
 use App\Core\TennisMalePlayer;
 use App\Core\TennisMatch;
+use App\Core\TennisPlayerFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -18,8 +19,16 @@ class TennisMatchTest extends TestCase
 {
     public function test_match_can_decide_a_winner(): void
     {
-        $player1 = new TennisMalePlayer(50, 40, 80);
-        $player2 = new TennisMalePlayer(60, 85, 55);
+        $player1 = TennisPlayerFactory::createPlayer('Juan', "m", [
+            "skill" => 50,
+            "strength"  => 40,
+            "speed" => 80
+        ]);
+        $player2 = TennisPlayerFactory::createPlayer('Pedro', "m", [
+            "skill" => 60,
+            "strength"  => 85,
+            "speed" => 55
+        ]);
         $match = new TennisMatch($player1, $player2);
         assertContains($match->decideWinner(), [$player1, $player2]);
     }

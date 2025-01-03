@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Player;
+use App\Services\DatabasePlayerService;
 use Illuminate\Http\Request;
 
-class PlayerController extends Controller
+class PlayerController extends BaseApiController
 {
+    protected DatabasePlayerService $db_player_service;
+
+    public function __construct(DatabasePlayerService $db_player_service)
+    {
+        $this->db_player_service = $db_player_service;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $data = Player::all();
+        $this->sendResponse($data);
     }
 
     /**
@@ -27,7 +29,13 @@ class PlayerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        try {
+            $this->db_player_service->createPlayer($data);
+            $this->sendResponse([], 'Player saved successfully');
+        } catch (\Throwable $th) {
+            $this->sendError($th->getMessage(), 500);
+        }
     }
 
     /**
@@ -35,15 +43,8 @@ class PlayerController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $data = Player::findOrFail($id);
+        $this->sendResponse($data);
     }
 
     /**
